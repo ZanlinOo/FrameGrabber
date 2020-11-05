@@ -13,9 +13,11 @@ namespace FrameGrabber
 {
     public partial class Form1 : Form
     {
+        
         public Form1()
         {
-            InitializeComponent();    
+            InitializeComponent();
+            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -40,6 +42,12 @@ namespace FrameGrabber
         private void monoGamePanel1_MouseMove(object sender, MouseEventArgs e)
         {
             monoGamePanel1.UpdateCameraPosition(Location);
+        }
+
+        private void Form1_Move(object sender, EventArgs e)
+        {
+            
+            Text = $"X:{Location.X} Y:{Location.Y} monoX:{monoGamePanel1.Location.X} monoY:{monoGamePanel1.Location.Y}";
         }
     }
 }

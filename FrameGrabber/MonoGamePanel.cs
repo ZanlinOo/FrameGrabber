@@ -25,9 +25,11 @@ namespace FrameGrabber
         {
             base.Initialize();
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            //resets Camera position to the top left corner. 
             Camera = new Camera2D();
+            Camera.Position = new Vector2(Width / 2f, Height / 2f);
 
-            PreviousMousePosition = new Vector2(0);
+            PreviousMousePosition = new Vector2(0);            
         }
         public bool LoadImage(string fileName)
         {
@@ -48,21 +50,14 @@ namespace FrameGrabber
         public void UpdateCameraPosition(System.Drawing.Point formLocation)
         {
             if (SpriteSheet == null) return;
-            // Not offseting correctly, especially if form is moving around the screen
-            var sheetLocation = new Rectangle(new Point(formLocation.X, formLocation.Y), new Point(SpriteSheet.Width, SpriteSheet.Height));
-            if (!sheetLocation.Contains(new Point(MousePosition.X, MousePosition.Y))) return;
 
-            float xDiff = Math.Abs(MousePosition.X) - Math.Abs(PreviousMousePosition.X);
-            if (xDiff != 0)
+            var DeltaMousePosition = new Vector2(Math.Abs(MousePosition.X) - Math.Abs(PreviousMousePosition.X), 
+                                                 Math.Abs(MousePosition.Y) - Math.Abs(PreviousMousePosition.Y));
+            PreviousMousePosition = new Vector2(MousePosition.X, MousePosition.Y);
+
+            if (Mouse.GetState().MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
-                PreviousMousePosition = new Vector2(MousePosition.X, PreviousMousePosition.Y);
-                Camera.Position = new Vector2(Camera.Position.X + xDiff, Camera.Position.Y);
-            }
-            float yDiff = Math.Abs(MousePosition.Y) - Math.Abs(PreviousMousePosition.Y);
-            if (yDiff != 0)
-            {
-                PreviousMousePosition = new Vector2(PreviousMousePosition.X, MousePosition.Y);
-                Camera.Position = new Vector2(Camera.Position.X, Camera.Position.Y + yDiff);
+                Camera.Position += new Vector2(-DeltaMousePosition.X, -DeltaMousePosition.Y);
             }
         }
 
@@ -71,7 +66,7 @@ namespace FrameGrabber
             base.Update(gameTime);
 
             Camera.GetTransformation(GraphicsDevice);
-
+            
         }
 
         protected override void Draw()
