@@ -41,13 +41,20 @@ namespace FrameGrabber
         }        
         private void monoGamePanel1_MouseMove(object sender, MouseEventArgs e)
         {
-            monoGamePanel1.UpdateCameraPosition(Location);
+            monoGamePanel1.IsInGamePanel = true;
+            monoGamePanel1.UpdateCamera();
+                        
         }
 
         private void Form1_Move(object sender, EventArgs e)
         {
             
             Text = $"X:{Location.X} Y:{Location.Y} monoX:{monoGamePanel1.Location.X} monoY:{monoGamePanel1.Location.Y}";
+        }
+
+        private void Form1_MouseLeave(object sender, EventArgs e)
+        {
+            monoGamePanel1.IsInGamePanel = false;
         }
     }
 }

@@ -86,6 +86,7 @@
             // 
             this.monoGamePanel1.Camera = null;
             this.monoGamePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.monoGamePanel1.IsInGamePanel = false;
             this.monoGamePanel1.Location = new System.Drawing.Point(0, 24);
             this.monoGamePanel1.MouseHoverUpdatesOnly = false;
             this.monoGamePanel1.Name = "monoGamePanel1";
@@ -105,6 +106,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.MouseLeave += new System.EventHandler(this.Form1_MouseLeave);
             this.Move += new System.EventHandler(this.Form1_Move);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
