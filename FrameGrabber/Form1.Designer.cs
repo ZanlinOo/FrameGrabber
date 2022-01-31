@@ -40,11 +40,14 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(40, 40);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(16, 5, 0, 5);
+            this.menuStrip1.Size = new System.Drawing.Size(2133, 55);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -55,26 +58,26 @@
             this.exportToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(87, 45);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // ImportToolStripMenuItem
             // 
             this.ImportToolStripMenuItem.Name = "ImportToolStripMenuItem";
-            this.ImportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.ImportToolStripMenuItem.Size = new System.Drawing.Size(274, 54);
             this.ImportToolStripMenuItem.Text = "Import";
             this.ImportToolStripMenuItem.Click += new System.EventHandler(this.ImportToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(274, 54);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(274, 54);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -87,23 +90,26 @@
             this.monoGamePanel1.Camera = null;
             this.monoGamePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.monoGamePanel1.IsInGamePanel = false;
-            this.monoGamePanel1.Location = new System.Drawing.Point(0, 24);
+            this.monoGamePanel1.Location = new System.Drawing.Point(0, 55);
+            this.monoGamePanel1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.monoGamePanel1.MouseHoverUpdatesOnly = false;
             this.monoGamePanel1.Name = "monoGamePanel1";
-            this.monoGamePanel1.Size = new System.Drawing.Size(800, 426);
+            this.monoGamePanel1.Size = new System.Drawing.Size(2133, 1018);
             this.monoGamePanel1.SpriteSheet = null;
             this.monoGamePanel1.TabIndex = 1;
             this.monoGamePanel1.Text = "monoGamePanel1";
+            this.monoGamePanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.monoGamePanel1_MouseClick);
             this.monoGamePanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.monoGamePanel1_MouseMove);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(2133, 1073);
             this.Controls.Add(this.monoGamePanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "Form1";
             this.Text = "Form1";
             this.MouseLeave += new System.EventHandler(this.Form1_MouseLeave);

@@ -17,13 +17,20 @@ namespace FrameGrabber
 {
     class MonoGamePanel : MonoGameControl
     {
-        private Vector2 PreviousMousePosition { get; set; }  
-        private Vector2 MousePositionOnPanel { get; set; }
+        private Texture2D Pixel { get; set; }
+        private Vector2 PreviousMousePosition { get; set; } 
         private int PreviousScrollWheelValue { get; set; }
         private SpriteBatch spriteBatch { get; set; }
         public Texture2D SpriteSheet { get; set; }
         public Camera2D Camera { get; set; }
         public bool IsInGamePanel { get; set; }
+        // they selection box with grow once clicked based on the mouse position.
+        private Rectangle SelectionBox { get; set; }
+        public Vector2 MousePositionOnPanel { get; set; }
+        public bool IsMouseDown { get; set; } = false;
+        public Vector2 ClickLocation { get; set; } = Vector2.Zero;
+
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -34,6 +41,9 @@ namespace FrameGrabber
 
             PreviousMousePosition = new Vector2(0);
             IsInGamePanel = false;
+
+            Pixel = new Texture2D(GraphicsDevice, 1, 1);
+            Pixel.SetData<Color>(new[] { Color.Red });
         }
         public bool LoadImage(string fileName)
         {
@@ -95,6 +105,10 @@ namespace FrameGrabber
 
             ZoomCamera();
         }
+        public void DrawBox()
+        {
+            spriteBatch.Draw(Pixel, new Rectangle((int)ClickLocation.X, (int)ClickLocation.Y, 10, 10), Color.White);
+        }
 
         protected override void Draw()
         {
@@ -106,6 +120,12 @@ namespace FrameGrabber
             {
                 spriteBatch.Draw(SpriteSheet, Vector2.Zero, Color.White);
             }
+
+            if(IsMouseDown)
+            {
+                DrawBox();
+            }
+
             spriteBatch.End();
 
         }

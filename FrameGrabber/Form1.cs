@@ -13,11 +13,10 @@ namespace FrameGrabber
 {
     public partial class Form1 : Form
     {
-        
         public Form1()
         {
             InitializeComponent();
-            
+     
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -43,18 +42,25 @@ namespace FrameGrabber
         {
             monoGamePanel1.IsInGamePanel = true;
             monoGamePanel1.UpdateCamera();
-                        
+            Text = $"X:{e.Location.X} Y:{e.Location.Y}";
+
+            monoGamePanel1.MousePositionOnPanel = new Microsoft.Xna.Framework.Vector2(e.X, e.Y);
         }
 
         private void Form1_Move(object sender, EventArgs e)
-        {
-            
+        {            
             Text = $"X:{Location.X} Y:{Location.Y} monoX:{monoGamePanel1.Location.X} monoY:{monoGamePanel1.Location.Y}";
         }
 
         private void Form1_MouseLeave(object sender, EventArgs e)
         {
             monoGamePanel1.IsInGamePanel = false;
+        }
+        // when clicked. draw a Red square on the monogame panel.
+        private void monoGamePanel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            monoGamePanel1.IsMouseDown = true;
+            monoGamePanel1.ClickLocation = new Microsoft.Xna.Framework.Vector2(e.Location.X, e.Location.Y);
         }
     }
 }
