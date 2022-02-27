@@ -25,11 +25,7 @@ namespace FrameGrabber
         public Camera2D Camera { get; set; }
         public bool IsInGamePanel { get; set; }
         // they selection box with grow once clicked based on the mouse position.
-        private Rectangle SelectionBox { get; set; }
-        public Vector2 MousePositionOnPanel { get; set; }
-        public bool IsMouseDown { get; set; } = false;
-        public Vector2 ClickLocation { get; set; } = Vector2.Zero;
-
+        public SelectionBox SelectionBox { get; set; }
 
         protected override void Initialize()
         {
@@ -43,7 +39,9 @@ namespace FrameGrabber
             IsInGamePanel = false;
 
             Pixel = new Texture2D(GraphicsDevice, 1, 1);
-            Pixel.SetData<Color>(new[] { Color.Red });
+            Pixel.SetData<Color>(new[] { Color.Lerp(Color.Red, Color.Transparent, 0.65f) });
+
+            SelectionBox = new SelectionBox(Pixel, Color.Red);
         }
         public bool LoadImage(string fileName)
         {
@@ -62,6 +60,10 @@ namespace FrameGrabber
             return true;
         }
         
+        public Rectangle getSelection()
+        {
+            return SelectionBox.Box;
+        }
   
         private void UpdateCameraPosition()
         {
@@ -70,24 +72,22 @@ namespace FrameGrabber
             var DeltaMousePosition = new Vector2(Math.Abs(MousePosition.X) - Math.Abs(PreviousMousePosition.X), 
                                                  Math.Abs(MousePosition.Y) - Math.Abs(PreviousMousePosition.Y));
             PreviousMousePosition = new Vector2(MousePosition.X, MousePosition.Y);
-
-
-            MousePositionOnPanel += new Vector2(DeltaMousePosition.X, DeltaMousePosition.Y);
-
+            
             if (Mouse.GetState().MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
                 Camera.Position += new Vector2(-DeltaMousePosition.X / Camera.Zoom, -DeltaMousePosition.Y / Camera.Zoom);
             }
         }
-        private void ZoomCamera()
+        private void ZoomCamera(float zoomScale)
         {
             var DeltaScrollWheelValue = Mouse.GetState().ScrollWheelValue - PreviousScrollWheelValue;
             PreviousScrollWheelValue = Mouse.GetState().ScrollWheelValue;
 
             if (IsInGamePanel && DeltaScrollWheelValue != 0)
-            {
-                //Camera.Position += new Vector2(MousePositionOnPanel.X, MousePositionOnPanel.Y);
-                Camera.Zoom += (DeltaScrollWheelValue * 0.001f);
+            {                
+                // zooms based on middle mouse wheel. 
+                Camera.Zoom += (DeltaScrollWheelValue * zoomScale);
+                
             }
 
         }
@@ -102,14 +102,12 @@ namespace FrameGrabber
             base.Update(gameTime);
 
             Camera.GetTransformation(GraphicsDevice);
-
-            ZoomCamera();
+            float zoomScale = 0.001f;
+            
+            SelectionBox.Update(ClientSize: ClientSize, CameraPosition: Camera.Position, zoomScale: Camera.Zoom);
+            
+            ZoomCamera(zoomScale);
         }
-        public void DrawBox()
-        {
-            spriteBatch.Draw(Pixel, new Rectangle((int)ClickLocation.X, (int)ClickLocation.Y, 10, 10), Color.White);
-        }
-
         protected override void Draw()
         {
             base.Draw();
@@ -121,10 +119,7 @@ namespace FrameGrabber
                 spriteBatch.Draw(SpriteSheet, Vector2.Zero, Color.White);
             }
 
-            if(IsMouseDown)
-            {
-                DrawBox();
-            }
+            SelectionBox.Draw(spriteBatch);
 
             spriteBatch.End();
 

@@ -73,6 +73,7 @@
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(274, 54);
             this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -94,6 +95,7 @@
             this.monoGamePanel1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.monoGamePanel1.MouseHoverUpdatesOnly = false;
             this.monoGamePanel1.Name = "monoGamePanel1";
+            this.monoGamePanel1.SelectionBox = null;
             this.monoGamePanel1.Size = new System.Drawing.Size(2133, 1018);
             this.monoGamePanel1.SpriteSheet = null;
             this.monoGamePanel1.TabIndex = 1;
